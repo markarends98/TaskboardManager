@@ -1,0 +1,19 @@
+<img class="create-image" src="./assets/rocket-rotating.gif">
+<div class="form-fields" mat-dialog-content>
+  <mat-form-field>
+    <input minlength="3" matInput [formControl]="nameFormControl" placeholder="Enter a project name" required>
+    <mat-error *ngIf="nameFormControl.hasError('minlength')">
+      Minimum of 3 characters
+    </mat-error>
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea rows="2" matInput [formControl]="descriptionFormControl" placeholder="Enter a project description"></textarea>
+  </mat-form-field>
+</div>
+<div class="dialog-options" mat-dialog-actions>
+  <button mat-flat-button color="warn" (click)="onCancelClick()">Cancel</button>
+  <button class="create-button" mat-flat-button color="primary" (click)="onCreateClick()">Create</button>
+</div>

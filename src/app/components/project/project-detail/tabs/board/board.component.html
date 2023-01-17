@@ -1,0 +1,91 @@
+<div class="flexbox">
+  <div class="item-container">
+    <h2 *ngIf="todo">TO DO {{ todo.length > 0 ? ' · ' + todo.length : null }}</h2>
+
+    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[inprogressList, doneList]" class="item-list"
+      (cdkDropListDropped)="drop($event, 'todo')">
+      <div class="item-box" *ngFor="let item of todo" cdkDrag [cdkDragData]="item">
+        {{item.name}}
+        <div>
+          <span *ngIf="item.story_points != 0" class="story-points">{{ item.story_points }}</span>
+          <img *ngIf="item.assignee.photoURL !== undefined" class="icon"
+            src="{{ item.assignee.photoURL != null ? item.assignee.photoURL : 'assets/default-user-image.png' }} " />
+          <button class="panel-more" mat-icon-button [matMenuTriggerFor]="options">
+            <mat-icon>
+              more_horiz
+            </mat-icon>
+          </button>
+          <mat-menu #options="matMenu">
+            <button mat-menu-item (click)="onEditClick(item)">
+              Edit
+            </button>
+            <button mat-menu-item (click)="handleArchive(item)">
+              Archive
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item-container">
+    <h2 *ngIf="inprogress">IN PROGRESS {{ inprogress.length > 0 ? ' · ' + inprogress.length : null }}</h2>
+
+    <div cdkDropList #inprogressList="cdkDropList" [cdkDropListData]="inprogress"
+      [cdkDropListConnectedTo]="[todoList, doneList]" class="item-list"
+      (cdkDropListDropped)="drop($event, 'inprogress')">
+      <div class="item-box" *ngFor="let item of inprogress" cdkDrag [cdkDragData]="item">
+        {{item.name}}
+        <div>
+          <span *ngIf="item.story_points != 0" class="story-points">{{ item.story_points }}</span>
+          <img *ngIf="item.assignee.photoURL !== undefined" class="icon"
+            src="{{ item.assignee.photoURL != null ? item.assignee.photoURL : 'assets/default-user-image.png' }} " />
+          <button class="panel-more" mat-icon-button [matMenuTriggerFor]="options">
+            <mat-icon>
+              more_horiz
+            </mat-icon>
+          </button>
+          <mat-menu #options="matMenu">
+            <button mat-menu-item (click)="onEditClick(item)">
+              Edit
+            </button>
+            <button mat-menu-item (click)="handleArchive(item)">
+              Archive
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item-container">
+    <h2 *ngIf="done">DONE {{ done.length > 0 ? ' · ' + done.length : null }}</h2>
+
+    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList, inprogressList]" class="item-list"
+      (cdkDropListDropped)="drop($event, 'done')">
+      <div class="item-box" *ngFor="let item of done" cdkDrag [cdkDragData]="item">
+        {{item.name}}
+        <div>
+          <span *ngIf="item.story_points != 0" class="story-points">{{ item.story_points }}</span>
+          <img *ngIf="item.assignee.photoURL !== undefined" class="icon"
+            src="{{ item.assignee.photoURL != null ? item.assignee.photoURL : 'assets/default-user-image.png' }} " />
+          <button class="panel-more" mat-icon-button [matMenuTriggerFor]="options">
+            <mat-icon>
+              more_horiz
+            </mat-icon>
+          </button>
+          <mat-menu #options="matMenu">
+            <button mat-menu-item (click)="onEditClick(item)">
+              Edit
+            </button>
+            <button mat-menu-item (click)="handleArchive(item)">
+              Archive
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

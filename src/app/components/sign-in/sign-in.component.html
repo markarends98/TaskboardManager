@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="login-form">
+    <h2 class="text-center">Sign in</h2>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Email" [(ngModel)]="user.email" required>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password" [(ngModel)]="user.password" required>
+    </div>
+    <div class="form-group">
+      <button mat-raised-button type="button" class="mat-primary btn-block" (click)="signInWithEmail()" [class.spinner]="loadingRegular" [disabled]="loadingRegular || loadingGoogle">
+        Log in
+      </button>
+    </div>
+    <div class="form-group">
+      <p class="text-divider"><span>Or</span></p>
+    </div>
+    <div class="form-group">
+      <button mat-raised-button type="button" class="mat-warn btn-block" (click)="signInWithGoogle()" [class.spinner]="loadingGoogle" [disabled]="loadingRegular || loadingGoogle">
+        <i class="fab fa-google"></i>
+        Sign in with Google
+      </button>
+    </div>
+    <div class="clearfix">
+      <a routerLink="/forgot-password" class="pull-left">Forgot Password?</a>
+    </div>
+  </div>
+  <p class="text-center">
+    Don't have an account?
+    <a routerLink="/sign-up">
+      Sign Up
+    </a>
+  </p>
+</div>

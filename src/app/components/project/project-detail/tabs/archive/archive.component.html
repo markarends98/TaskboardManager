@@ -1,0 +1,50 @@
+<div>
+  <div>
+    <h3><b>Finished sprints</b></h3>
+    <mat-accordion multi="true">
+      <mat-expansion-panel *ngFor="let sprint of sprints">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b class="sprint-name">{{ sprint.name }}</b>
+          </mat-panel-title>
+
+          <mat-panel-description>
+         <span>
+           {{sprint.startDate | date:'MM/dd/yyyy'}} - {{sprint.endDate| date:'MM/dd/yyyy'}}
+         </span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="this.sprintUserStories[sprint.id] && this.sprintUserStories[sprint.id] .length > 0; else notFound">
+          <mat-list>
+            <div *ngFor="let userStory of this.sprintUserStories[sprint.id]">
+              <mat-list-item>{{userStory.name}}</mat-list-item>
+              <mat-divider></mat-divider>
+            </div>
+          </mat-list>
+        </div>
+        <ng-template #notFound>
+          <p>No user stories 'done' for sprint '{{sprint.name}}'</p>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div class="user-story-archive">
+    <h3><b>User story archive</b></h3>
+    <div *ngIf="userStoryArchive && userStoryArchive.length > 0; else archiveEmpty">
+      <mat-selection-list #userStoriesList >
+        <div *ngFor="let userStory of userStoryArchive">
+          <mat-list-option checkboxPosition="before" [value]="userStory" color="primary">{{ userStory.name }}</mat-list-option>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-selection-list>
+      <div>
+        <button id="restoreButton" mat-raised-button color="primary" [disabled]="userStoriesList.selectedOptions.selected.length === 0" (click)="restore(userStoriesList.selectedOptions.selected)">Restore</button>
+      </div>
+    </div>
+    <ng-template #archiveEmpty>
+      <p>There are currently no user stories in the archive.</p>
+    </ng-template>
+  </div>
+</div>

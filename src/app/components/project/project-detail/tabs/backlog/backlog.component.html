@@ -1,0 +1,152 @@
+<div class="options">
+  <button class="create-button" mat-raised-button color="primary" (click)="openCreateSprintDialog()">Add sprint
+  </button>
+</div>
+
+<mat-accordion multi="true" cdkDropListGroup>
+
+  <mat-expansion-panel class="reverse" *ngFor="let sprint of sprints; index as sprintNumber" [expanded]="true" #panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b class="sprint-name">{{sprint.name}}</b>
+      </mat-panel-title>
+
+       <mat-panel-description *ngIf="sprint.status === 'active'">
+         <span>
+           {{sprint.startDate | date:'MM/dd/yyyy'}} - {{sprint.endDate| date:'MM/dd/yyyy'}}
+         </span>
+       </mat-panel-description>
+
+      <button mat-button *ngIf="sprint.status === 'open'; else finish" (click)="panel.toggle(); startSprint(sprint)" [disabled]="hasActiveSprint">Start sprint</button>
+      <ng-template #finish>
+        <button mat-button (click)="panel.toggle();finishSprint(sprint)">Finish sprint</button>
+      </ng-template>
+
+      <div>
+        <button class="panel-more" mat-icon-button [matMenuTriggerFor]="sprintOptions" (click)="panel.toggle();">
+          <mat-icon>
+            more_horiz
+          </mat-icon>
+        </button>
+        <mat-menu #sprintOptions="matMenu">
+          <button mat-menu-item (click)="openEditSprintDialog(sprint.id)">
+            Edit
+          </button>
+        </mat-menu>
+      </div>
+    </mat-expansion-panel-header>
+
+    <div>
+      <mat-list *ngIf="userStories" cdkDropList
+                [cdkDropListData]="userStories[sprint.id]" (cdkDropListDropped)="dropSprintEvent($event, sprint.id)">
+        <div class="list-item" *ngFor="let userStory of userStories[sprint.id]" cdkDrag [cdkDragData]="userStory">
+          <mat-list-item class="highlight">
+            <span>{{ userStory.name }}</span>
+            <div class="options-menu">
+              <span *ngIf="userStory.story_points != 0" class="story-points">{{ userStory.story_points }}</span>
+              <img *ngIf="userStory.assignee.photoURL !== undefined" class="icon" src="{{ userStory.assignee.photoURL != null ? userStory.assignee.photoURL : 'assets/default-user-image.png' }} "/>
+              <button class="panel-more" mat-icon-button [matMenuTriggerFor]="userStoryOptions">
+                <mat-icon>
+                  more_horiz
+                </mat-icon>
+              </button>
+              <mat-menu #userStoryOptions="matMenu">
+                <button mat-menu-item (click)="onEditClick(userStory)">
+                  Edit
+                </button>
+                <button mat-menu-item (click)="handleArchive(userStory)">
+                  {{ userStory.archived ? 'De-archive' : 'Archive'}}
+                </button>
+              </mat-menu>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </div>
+
+      </mat-list>
+
+      <mat-list-item>
+        <button class="add-user-story" mat-button
+                *ngIf="showAddUserStory(sprintNumber) === false; else addUserStoryTemplate"
+                (click)="prepareAddUserStory(sprintNumber)">
+          <mat-icon>
+            add
+          </mat-icon>
+          Add user story
+        </button>
+
+        <ng-template #addUserStoryTemplate>
+          <input class="user-story-input" [formControl]="getControl(sprintNumber)" placeholder="Name" required
+                 (keyup.enter)="addUserStoryToSprint(sprintNumber)">
+
+          <button mat-icon-button (click)="cancelAddUserStory(sprintNumber)">
+            <mat-icon>
+              close
+            </mat-icon>
+          </button>
+          <mat-divider></mat-divider>
+        </ng-template>
+      </mat-list-item>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="reverse" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b class="sprint-name">Backlog</b>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div>
+      <mat-list *ngIf="userStories" cdkDropList
+                [cdkDropListData]="userStories['backlog']" (cdkDropListDropped)="dropSprintEvent($event, '')">
+        <div class="list-item" *ngFor="let userStory of userStories['backlog']" cdkDrag [cdkDragData]="userStory">
+          <mat-list-item class="highlight">
+            <span>{{ userStory.name }}</span>
+            <div class="options-menu">
+              <span *ngIf="userStory.story_points != 0" class="story-points">{{ userStory.story_points }}</span>
+              <img *ngIf="userStory.assignee.photoURL !== undefined" class="icon" src="{{ userStory.assignee.photoURL != null ? userStory.assignee.photoURL : 'assets/default-user-image.png' }} "/>
+              <button class="panel-more" mat-icon-button [matMenuTriggerFor]="userStoryOptions">
+                <mat-icon>
+                  more_horiz
+                </mat-icon>
+              </button>
+              <mat-menu #userStoryOptions="matMenu">
+                <button mat-menu-item (click)="onEditClick(userStory)">
+                  Edit
+                </button>
+                <button mat-menu-item (click)="handleArchive(userStory)">
+                  Archive
+                </button>
+              </mat-menu>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list>
+
+      <mat-list-item>
+        <button class="add-user-story" mat-button *ngIf="showAddBacklog === false; else addUserStoryBacklogTemplate"
+                (click)="prepareAddBacklog()">
+          <mat-icon>
+            add
+          </mat-icon>
+          Add user story
+        </button>
+
+        <ng-template #addUserStoryBacklogTemplate>
+          <input class="user-story-input" placeholder="Name" required [formControl]="backlogControl"
+                 (keyup.enter)="addToBacklog()">
+
+          <button mat-icon-button (click)="cancelAddBacklog()">
+            <mat-icon>
+              close
+            </mat-icon>
+          </button>
+          <mat-divider></mat-divider>
+        </ng-template>
+      </mat-list-item>
+    </div>
+  </mat-expansion-panel>
+
+</mat-accordion>

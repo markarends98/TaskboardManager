@@ -1,0 +1,11 @@
+<div *ngIf="lineChartData && sprint;else nosprint" style="position: relative; height:40vh; width:80vw">
+  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+    [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+  </canvas>
+</div>
+<ng-template #nosprint>
+  <div class="no-records">
+    <img class="rocket-image" src="assets/rocket-launching.png"/>
+    <h1>Start a sprint to access the burndown chart</h1>
+  </div>
+</ng-template>

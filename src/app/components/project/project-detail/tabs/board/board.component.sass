@@ -1,0 +1,85 @@
+h2
+  color: rgb(94, 108, 132)
+  font-size: 12px
+  margin-left: 10px
+
+.flexbox
+  display: flex
+  flex-wrap: nowrap
+  overflow: auto
+  flex-direction: row
+  margin-left: 0px !important
+
+.item-container
+  justify-content: center
+  align-items: stretch
+  min-width: 282px
+  max-width: 282px
+  margin: 0 25px 25px 0
+  display: flex
+  flex-direction: column
+  align-content: flex-start
+  vertical-align: top
+  background-color: #f4f5f7
+  border-radius: 6px 6px
+
+.item-list
+  min-height: 80px
+  background: #f4f5f7
+  overflow: hidden
+  display: block
+  border-radius: 0px 0px 6px 6px
+  flex: 1
+
+.item-box
+  max-width: 270px
+  border-radius: 3px
+  padding: 10px 10px
+  margin: 3px 5px 5px
+  box-shadow: rgba(23, 43, 77, 0.2) 0px 1px 1px, rgba(23, 43, 77, 0.2) 0px 0px 1px
+  color: #172b4d
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  box-sizing: border-box
+  cursor: pointer
+  background: white
+  font-size: 14px
+
+.item-box:hover
+  background-color: #f4f5f7
+
+.cdk-drag-preview
+  background-color: #deebff
+  box-sizing: border-box
+  border-radius: 4px
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)
+
+.cdk-drag-placeholder
+  opacity: 0
+
+.cdk-drag-animating
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+.item-list.cdk-drop-list-dragging .item-box:not(.cdk-drag-placeholder)
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+.panel-more
+  color: rgba(0, 0, 0, 0.54)
+
+.icon
+  width: 30px
+  height: 30px
+  border-radius: 25px
+  margin-right: 5px
+
+.story-points
+  display:table-cell
+  vertical-align:middle
+  margin-right: 15px
+  background-color: rgb(223, 225, 230)
+  border-radius: 2em
+  font-size: 12px
+  padding: 0.166667em 0.5em
+  text-align: center

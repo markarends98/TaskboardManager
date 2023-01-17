@@ -1,0 +1,49 @@
+<div class="parent">
+  <mat-form-field class="full-width">
+    <input matInput [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter a user story name">
+    <mat-error *ngIf="nameFormControl.hasError('minlength')">
+      Minimum of 3 characters
+    </mat-error>
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Sprint name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <textarea rows=2 matInput [formControl]="descriptionFormControl" [errorStateMatcher]="matcher"
+      placeholder="Enter a user story description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input type="number" matInput [formControl]="numberFormControl" [errorStateMatcher]="matcher"
+      placeholder="Story points">
+    <mat-error *ngIf="numberFormControl.hasError('min')">
+      Story points can't be lower than 0
+    </mat-error>
+    <mat-error *ngIf="numberFormControl.hasError('max')">
+      Story points can't be higher than 20
+    </mat-error>
+    <mat-error *ngIf="numberFormControl.hasError('required')">
+      Story points are <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="project">
+    <mat-label>Assignee</mat-label>
+    <mat-select [formControl]="assigneeFormControl">
+      <mat-option value="">
+        <img class="icon" src="assets/default-user-image.png" />
+        Unassigned
+      </mat-option>
+      <mat-option *ngFor="let member of project.members" [value]="member.uid">
+        <img class="icon" src="{{ member.photoURL }}" />
+        {{ member.email }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button class="assign" mat-stroked-button (click)="onQuickAssignClick()">Assign to me</button>
+  <div class="dialog-options" mat-dialog-actions>
+    <button mat-flat-button color="warn" mat-dialog-close (click)="onCancelClick()">Cancel</button>
+    <button class="create-button" mat-flat-button color="primary" (click)="onSaveClick()">Save</button>
+  </div>
+</div>

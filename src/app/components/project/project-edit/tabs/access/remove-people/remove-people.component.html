@@ -1,0 +1,11 @@
+<div class="parent">
+  <h3>Are you sure you want to remove this person from your project?</h3>
+  <div class="alert alert-danger" role="alert">
+    <mat-icon aria-hidden="false" aria-label="warning">warning</mat-icon>
+    Warning! Doing this will also remove the user as assignee from associated user stories
+  </div>
+  <div class="align-right">
+    <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+    <button class="yes-button" mat-raised-button color="primary" (click)="onYesClick()">Yes</button>
+  </div>
+</div>

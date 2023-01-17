@@ -1,0 +1,54 @@
+.login-form
+  width: 340px
+  margin: 50px auto
+  margin-bottom: 15px
+  background: #f7f7f7
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3)
+  padding: 30px
+
+  h2
+    margin: 0 0 15px
+
+.form-control
+  min-height: 38px
+  border-radius: 2px
+
+.btn
+  min-height: 38px
+  border-radius: 2px
+  font-size: 15px
+
+.text-divider
+  margin: 2em 0
+  line-height: 0
+  text-align: center
+
+  span
+    background-color: #f7f7f7
+    font-weight: bold
+    padding: 1em
+
+  &:before
+    content: " "
+    display: block
+    border-top: 1px solid #e3e3e3
+    border-bottom: 1px solid #f7f7f7
+
+@keyframes spinner
+  to
+    transform: rotate(360deg)
+
+.spinner:before
+  content: ''
+  box-sizing: border-box
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 20px
+  height: 20px
+  margin-top: -10px
+  margin-left: -10px
+  border-radius: 50%
+  border: 2px solid #ffffff
+  border-top-color: #000000
+  animation: spinner .8s linear infinite

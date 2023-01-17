@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="login-form">
+    <h2 class="text-center">Sign up</h2>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Full name" [(ngModel)]="user.fullname" required>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Email" [(ngModel)]="user.email" required>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" placeholder="Password" [(ngModel)]="user.password" required>
+    </div>
+    <div class="form-group">
+      <button mat-raised-button type="button" class="mat-primary btn-block" (click)="signUp()" [class.spinner]="loadingRegular" [disabled]="loadingRegular || loadingGoogle">
+        Sign up
+      </button>
+    </div>
+    <div class="form-group">
+      <p class="text-divider"><span>Or</span></p>
+    </div>
+    <div class="form-group">
+      <button mat-raised-button type="button" class="mat-warn btn-block" (click)="signUpWithGoogle()" [class.spinner]="loadingGoogle" [disabled]="loadingRegular || loadingGoogle">
+        <i class="fab fa-google"></i>
+        Continue with Google
+      </button>
+    </div>
+  </div>
+  <p class="text-center">
+    Already have an account?
+    <a href="/sign-in">
+      Sign In
+    </a>
+  </p>
+</div>

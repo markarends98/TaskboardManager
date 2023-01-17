@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Start {{ sprint.name }}</h2>
+<div class="form-fields" mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Start date</mat-label>
+    <input matInput [formControl]="startDateFormControl" [errorStateMatcher]="matcher" [matDatepicker]="sprintStartDate" placeholder="Pick a start date" required>
+    <mat-datepicker-toggle matSuffix [for]="sprintStartDate"></mat-datepicker-toggle>
+    <mat-datepicker #sprintStartDate></mat-datepicker>
+    <mat-error *ngIf="startDateFormControl.hasError('required')">
+      Start date is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>End date</mat-label>
+    <input matInput [formControl]="endDateFormControl" [errorStateMatcher]="matcher" [min]="startDateFormControl.value"  [matDatepicker]="sprintEndDate"  placeholder="Pick a end date" required>
+    <mat-datepicker-toggle matSuffix [for]="sprintEndDate"></mat-datepicker-toggle>
+    <mat-datepicker #sprintEndDate></mat-datepicker>
+    <mat-error *ngIf="endDateFormControl.hasError('required')">
+      End date is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>
+<div class="dialog-options" mat-dialog-actions>
+  <button mat-flat-button color="warn" mat-dialog-close>Cancel</button>
+  <button class="start-button" mat-flat-button color="primary" (click)="onStartClick()" [disabled]="hasErrors()">Start</button>
+</div>

@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="form">
+    <h3 class="text-center">Almost there</h3>
+    <div class="form-group" *ngIf="authService.user as user">
+      <p class="text-center">We have sent a confirmation email to <strong>{{user.email}}</strong></p>
+      <p class="text-center">Please check your email and click on the link to verify your email address.</p>
+    </div>
+    <div class="form-group" *ngIf="authService.user as user">
+      <button type="button" class="btn btn-primary btn-block" (click)="sendVerificationMail()">
+        <i class="fas fa-redo-alt"></i>
+        Resend Verification Email
+      </button>
+    </div>
+  </div>
+  <p class="text-center">
+    Go back to
+    <a routerLink="/sign-in">
+      Sign In
+    </a>
+  </p>
+</div>

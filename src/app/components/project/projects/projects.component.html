@@ -1,0 +1,75 @@
+<div class="table-options">
+  <mat-button-toggle-group class="button-toggle-group" name="fontStyle" aria-label="Font Style"
+    [(ngModel)]="archiveFilter" (change)="onToggleArchive()">
+    <mat-button-toggle value="active">Active</mat-button-toggle>
+    <mat-button-toggle value="archived">Archived</mat-button-toggle>
+    <mat-button-toggle value="all">All</mat-button-toggle>
+  </mat-button-toggle-group>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+  <button class="create-button" mat-raised-button color="primary" (click)="openCreateProjectDialog()">
+    Create project
+  </button>
+</div>
+
+<table mat-table [dataSource]="matTableDataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['/projects', element.id]">
+        {{ element.name | titlecase }}
+      </a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description | titlecase}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+    <td mat-cell *matCellDef="let element"> {{element.status | titlecase }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="owner">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner </th>
+    <td mat-cell *matCellDef="let element">
+      <img class="icon" src="{{ owners[element.id].photoURL ? owners[element.id].photoURL : '/assets/default-user-image.png' }}"/>
+      {{ owners[element.id].displayName | titlecase }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="star">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td align="right" mat-cell *matCellDef="let element">
+      <button mat-button [matMenuTriggerFor]="menu"><i class="material-icons md-24">more_horiz</i></button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/projects', element.id, 'settings']">
+          <a>
+            Project settings
+          </a>
+        </button>
+        <button mat-menu-item (click)="!element.archived ? onArchiveClick(element.id) : onDeArchiveClick(element.id)">
+          <a>
+            {{ !element.archived ? 'Archive' : 'De-archive'}}
+          </a>
+        </button>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div *ngIf="projects">
+  <div *ngIf="projects.length == 0" class="no-records">
+    <img class="rocket-image" src="assets/rocket-launching.png"/>
+    <h1>You are ready to create your first project</h1>
+  </div>
+</div>
+
+<mat-paginator #projectPaginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>

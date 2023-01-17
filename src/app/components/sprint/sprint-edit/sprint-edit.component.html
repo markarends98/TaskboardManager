@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Edit sprint</h2>
+<div class="form-fields" mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input  minlength="3" [formControl]="nameFormControl" [errorStateMatcher]="matcher" matInput placeholder="Enter a sprint name" required>
+    <mat-error *ngIf="nameFormControl.hasError('minlength')">
+      Minimum of 3 characters
+    </mat-error>
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Sprint name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea minlength="3" rows="2" [formControl]="descriptionFormControl" matInput placeholder="Enter a sprint description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="this.sprintActive">
+    <mat-label>Start date</mat-label>
+    <input matInput [formControl]="startDateFormControl" [errorStateMatcher]="matcher" [matDatepicker]="sprintStartDate" placeholder="Pick a start date" required>
+    <mat-datepicker-toggle matSuffix [for]="sprintStartDate"></mat-datepicker-toggle>
+    <mat-datepicker #sprintStartDate></mat-datepicker>
+    <mat-error *ngIf="startDateFormControl.hasError('required')">
+      Start date is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field *ngIf="this.sprintActive">
+    <mat-label>End date</mat-label>
+    <input matInput [formControl]="endDateFormControl" [errorStateMatcher]="matcher" [min]="startDateFormControl.value"  [matDatepicker]="sprintEndDate"  placeholder="Pick a end date" required>
+    <mat-datepicker-toggle matSuffix [for]="sprintEndDate"></mat-datepicker-toggle>
+    <mat-datepicker #sprintEndDate></mat-datepicker>
+    <mat-error *ngIf="endDateFormControl.hasError('required')">
+      End date is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>
+<div class="dialog-options" mat-dialog-actions>
+  <button mat-flat-button color="warn" mat-dialog-close>Cancel</button>
+  <button class="create-button" mat-flat-button color="primary" (click)="onEditClick()" [disabled]="hasErrors()">Edit</button>
+</div>

@@ -1,0 +1,21 @@
+<div class="parent">
+  <mat-form-field class="full-width">
+    <input class="email-input" matInput placeholder="Type a email address" [matAutocomplete]="auto" [formControl]="emailFormControl">
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Minimum of 3 characters
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('email')">
+      Email is not valid
+    </mat-error>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let user of filteredUsers | async" [value]="user.email">
+        <img class="icon" src="{{(user.photoURL) ? user.photoURL : '/assets/default-user-image.png'}}"/>
+        <span class="email">{{ user.email }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <div class="align-right">
+    <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+    <button class="add-button" mat-raised-button color="primary" (click)="onAddClick()">Add</button>
+  </div>
+</div>
